@@ -20,6 +20,9 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 LPDIRECT3D9         g_pD3D = NULL; 
 LPDIRECT3DDEVICE9   g_pd3dDevice = NULL; 
 
+LPDIRECT3DTEXTURE9      testTexture; 
+ID3DXSprite* testSprite;  
+
 HRESULT InitD3D(HWND hWnd)
 {
     if (NULL == (g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)))
@@ -40,7 +43,14 @@ HRESULT InitD3D(HWND hWnd)
     return S_OK;
 }
 
+void InitMyStuff() {
+    D3DXCreateSprite(g_pd3dDevice, &testSprite);    
+    (D3DXCreateTextureFromFile(g_pd3dDevice, L"Harry.bmp", &testTexture));
+
+}
+
 void EngineUpdate() {
+    
 
 }
 
@@ -53,6 +63,15 @@ VOID EngineRender()
 
     if (SUCCEEDED(g_pd3dDevice->BeginScene()))
     {
+        RECT srcRect;
+        srcRect.left = 0;
+        srcRect.top = 0;
+        srcRect.right = 64;
+        srcRect.bottom = 64;
+
+        testSprite->Begin(D3DXSPRITE_ALPHABLEND);
+        testSprite->Draw(testTexture,&srcRect,nullptr,nullptr, D3DCOLOR_XRGB(255, 255, 255));
+        testSprite->End();
         g_pd3dDevice->EndScene();
     }
 
@@ -134,6 +153,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    }
 
    InitD3D(hWnd);
+   InitMyStuff();
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
