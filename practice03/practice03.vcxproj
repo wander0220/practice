@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="engine_Input.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="practice03.h" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="practice03.cpp" />
+    <ClCompile Include="texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="practice03.rc" />

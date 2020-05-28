@@ -20,8 +20,10 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 LPDIRECT3D9         g_pD3D = NULL; 
 LPDIRECT3DDEVICE9   g_pd3dDevice = NULL; 
 
-LPDIRECT3DTEXTURE9      testTexture; 
-ID3DXSprite* testSprite;  
+//LPDIRECT3DTEXTURE9      testTexture; 
+//ID3DXSprite* testSprite;  
+
+TextureManager textureManager;
 
 HRESULT InitD3D(HWND hWnd)
 {
@@ -44,9 +46,7 @@ HRESULT InitD3D(HWND hWnd)
 }
 
 void InitMyStuff() {
-    D3DXCreateSprite(g_pd3dDevice, &testSprite);    
-    (D3DXCreateTextureFromFile(g_pd3dDevice, L"Harry.bmp", &testTexture));
-
+    textureManager.LoadTexture(L"Harry.bmp",1);
 }
 
 void EngineUpdate() {
@@ -63,15 +63,17 @@ VOID EngineRender()
 
     if (SUCCEEDED(g_pd3dDevice->BeginScene()))
     {
+        TextureElement* element = textureManager.GetTexture(1);
         RECT srcRect;
         srcRect.left = 0;
         srcRect.top = 0;
         srcRect.right = 64;
         srcRect.bottom = 64;
 
-        testSprite->Begin(D3DXSPRITE_ALPHABLEND);
-        testSprite->Draw(testTexture,&srcRect,nullptr,nullptr, D3DCOLOR_XRGB(255, 255, 255));
-        testSprite->End();
+        element->Sprite->Begin(D3DXSPRITE_ALPHABLEND);
+        element->Sprite->Draw(element->Texture,&srcRect,nullptr,nullptr, D3DCOLOR_XRGB(255, 255, 255));
+        element->Sprite->End();
+
         g_pd3dDevice->EndScene();
     }
 
