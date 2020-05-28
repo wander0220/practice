@@ -36,12 +36,18 @@
     <ClInclude Include="input_manager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="math_utill.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="practice03.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="texture_manager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="math_utill.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

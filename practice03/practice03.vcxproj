@@ -153,12 +153,14 @@
     <ClInclude Include="input_manager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="global.h" />
+    <ClInclude Include="math_utill.h" />
     <ClInclude Include="practice03.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="texture_manager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="math_utill.cpp" />
     <ClCompile Include="practice03.cpp" />
     <ClCompile Include="texture_manager.cpp" />
   </ItemGroup>
