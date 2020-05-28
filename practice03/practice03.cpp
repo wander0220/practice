@@ -24,6 +24,10 @@ LPDIRECT3DDEVICE9   g_pd3dDevice = NULL;
 //ID3DXSprite* testSprite;  
 
 TextureManager textureManager;
+InputManager inputManager;
+
+int spriteX = 0;
+int spriteY = 0;
 
 HRESULT InitD3D(HWND hWnd)
 {
@@ -50,7 +54,13 @@ void InitMyStuff() {
 }
 
 void EngineUpdate() {
-    
+    if (inputManager.keyBuffer[VK_LEFT] == 1) {
+        spriteX += 1;
+    }
+    if (inputManager.keyBuffer[VK_RIGHT] == 1) {
+        spriteX -= 1;
+    }
+
 
 }
 
@@ -64,14 +74,16 @@ VOID EngineRender()
     if (SUCCEEDED(g_pd3dDevice->BeginScene()))
     {
         TextureElement* element = textureManager.GetTexture(1);
+        element->Sprite->Begin(D3DXSPRITE_ALPHABLEND);
+
         RECT srcRect;
         srcRect.left = 0;
         srcRect.top = 0;
         srcRect.right = 64;
         srcRect.bottom = 64;
 
-        element->Sprite->Begin(D3DXSPRITE_ALPHABLEND);
-        element->Sprite->Draw(element->Texture,&srcRect,nullptr,nullptr, D3DCOLOR_XRGB(255, 255, 255));
+        D3DXVECTOR3  pos(spriteX,spriteY,0);
+        element->Sprite->Draw(element->Texture,&srcRect,nullptr,&pos, D3DCOLOR_XRGB(255, 255, 255));
         element->Sprite->End();
 
         g_pd3dDevice->EndScene();
@@ -176,6 +188,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
+        break;
+    case WM_KEYDOWN:
+        inputManager.keyBuffer[wParam] = 0;
+        break;
+    case WM_KEYUP:
+        inputManager.keyBuffer[wParam] = 1;
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
