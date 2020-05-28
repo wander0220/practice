@@ -54,13 +54,27 @@ void InitMyStuff() {
 }
 
 void EngineUpdate() {
-    if (inputManager.keyBuffer[VK_LEFT] == 1) {
-        spriteX += 1;
-    }
-    if (inputManager.keyBuffer[VK_RIGHT] == 1) {
+    /*if (inputManager.keyBuffer[VK_LEFT] == 1) {
         spriteX -= 1;
     }
+    if (inputManager.keyBuffer[VK_RIGHT] == 1) {
+        spriteX += 1;
+    }
+    if (inputManager.keyBuffer[VK_UP] == 1) {
+        spriteY -= 1;
+    }
+    if (inputManager.keyBuffer[VK_DOWN] == 1) {
+        spriteY += 1;
+    }*/
 
+    if (inputManager.prevKeyBuffer[VK_LEFT] == 1 && inputManager.keyBuffer[VK_LEFT] == 0) {
+        spriteX -= 1;
+    }
+    if (inputManager.prevKeyBuffer[VK_RIGHT] == 1 && inputManager.keyBuffer[VK_RIGHT] == 0) {
+        spriteX += 1;
+    }
+
+    inputManager.Update();
 
 }
 
@@ -190,10 +204,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         break;
     case WM_KEYDOWN:
-        inputManager.keyBuffer[wParam] = 0;
+        inputManager.keyBuffer[wParam] = 1;
         break;
     case WM_KEYUP:
-        inputManager.keyBuffer[wParam] = 1;
+        inputManager.keyBuffer[wParam] = 0;
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
